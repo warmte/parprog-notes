@@ -1,7 +1,7 @@
 # Summary
 
 - [About & Links](./course.md)
-- [Теоретический блок]()]
-	- [Введение и мотивация](./01_th_intro.md)
+- [Теоретический блок]()
+	- [Введение и мотивация](./th_01_intro.md)
 - [Практический блок]()
-	- 
+	- [Lock-free Treiber Stack and Michael-Scott Queue](./pr_01_stack_queue)
