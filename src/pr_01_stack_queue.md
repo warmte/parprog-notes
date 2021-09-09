@@ -1,4 +1,4 @@
-# Lock-free Treiber Stack and Michael-Scott Queue
+# Lock-free Treiber Stack & Michael-Scott Queue
 ---
 ## План лекции
 
