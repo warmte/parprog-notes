@@ -268,6 +268,88 @@ public class SimpleTest1 {
 </code></pre>
 <p>Результат: всё сломалось. В теории у нас три равновозможных результата, на практике все четыре возможны, при этом <code>{1, 1}</code> реже всех. Почему? Потому что тестировали на TSO (Total Store Order) модели памяти, где операции записи кладутся в буфер, и чтение в некоторых случаях было выполнено раньше, чем запись «дошла» до памяти.</p>
 <h1><a class="header" href="#lock-free-treiber-stack-and-michael-scott-queue" id="lock-free-treiber-stack-and-michael-scott-queue">Lock-free Treiber Stack and Michael-Scott Queue</a></h1>
+<hr />
+<h2><a class="header" href="#План-лекции" id="План-лекции">План лекции</a></h2>
+<ol>
+<li>Неблокирующиеся алгоритмы</li>
+<li>Lock-free Treiber Stack</li>
+<li>Michael-Scott Queue</li>
+</ol>
+<h2><a class="header" href="#mutual-exclusion" id="mutual-exclusion">Mutual exclusion</a></h2>
+<p>Aka <code>mutex</code> или <code>lock</code>, только один поток может держать блокировку.</p>
+<h3><a class="header" href="#atomic-counter" id="atomic-counter">Atomic counter</a></h3>
+<pre><code class="language-kotlin">val l = Lock()
+var counter = 0
+
+fun incAndGet(): Int {
+    l.lock()
+    try {
+    return ++counter
+    } finally {
+        l.unlock()
+    }
+}
+</code></pre>
+<p>Нет гарантии прогресса в том случае, если CPU «отберут»</p>
+<h2><a class="header" href="#lock-freedom" id="lock-freedom">Lock-freedom</a></h2>
+<p>Гарантирует прогресс в системе. <code>CAS (Compare-And-Set)</code> – <code>CAS(p, old, new)</code> атомарно проверяет, что значение по адресу <code>p</code> атомарно совпадает с <code>old</code> и заменяет его на <code>new</code>.</p>
+<h3><a class="header" href="#counter" id="counter">Counter</a></h3>
+<pre><code class="language-kotlin">fun getAndInc(): Int {
+    while (true) {
+        cur := c
+        if CAS(&amp;c, cur, cur + 1) {
+            return c
+        }
+    }
+}
+</code></pre>
+<h3><a class="header" href="#stack" id="stack">Stack</a></h3>
+<pre><code class="language-kotlin">fun pop(): Int {
+    head := H
+    while (true) {
+        if CAS(&amp;H, head, head == null ? null : head.Next) {
+                if head == null: return null
+                return head.Value
+            }
+        }
+    }
+}
+
+fun push(x: Int) {
+    while (true) {  
+        head := H
+        newHead := Node {Value: x, Next: head}
+        if CAS(&amp;H, head, newHead): return
+    }
+}
+
+fun top(): Int? {
+    head := H
+    return head == null ? null : head
+}
+</code></pre>
+<p><strong>Последовательная согласованность (Sequential consistency)</strong> – это такое последовательное исполнение, которое учитывает порядок внутри потоков, но не учитывает синхронизацию между потоками.</p>
+<h3><a class="header" href="#elimination-for-stack" id="elimination-for-stack">Elimination for Stack</a></h3>
+<p>Оптимизация следующая: заведём дополнительный массив фиксированного размера, <code>push</code> сначала пойдёт в его рандомную ячейку (или рядом, если та была уже занята), а <code>pop</code> смотрит несколько рядом стоящих ячеек и ищет занятую.Если операция дождалась (<code>push</code> – <code>pop’а</code>, <code>pop</code> – нового элемента), то всё хорошо, иначе идём в стек и действуем по выше описанному алгоритму.</p>
+<h3><a class="header" href="#queue" id="queue">Queue</a></h3>
+<p>Операция добавления элемента должна переписать <code>Next</code> у <code>Tail</code> и подвинуть <code>Tail</code> на последний элемент. Если мы перепишем <code>Next</code>, но не успеем подвинуть <code>Tail</code> (какой-то другой поток тоже начал писать) всё сломается.
+<strong>Helping</strong>: пусть если поток хочет положить элемент в конец очереди, а у последнего элемента уже есть <code>Next</code>, он просто поможет подвинуть <code>Tail</code> на элемент вперёд и опять попытается добавить свой элемент уже в следующей итерации. Тогда при добавлении элемента и передвижении <code>Tail</code> его <code>CAS</code> для передвижения <code>Tail</code> не пройдёт – хвост уже перенесли.</p>
+<pre><code class="language-kotlin">fun enqueue (x: int) {
+    newTail := Node { Value = x, N = null}
+    while (true) { // CAS loop
+        tail := T
+        if CAS(&amp;tail.N, null, newTail) {
+            // 'newTail' just added, move the tail forward
+            CAS (&amp;T, tail, newTail)
+            return 
+        } else {
+            // help other enqueue operations
+            CAS(&amp;T, tail, tail.N)
+        }
+    }
+}
+</code></pre>
+<p>Удаление реализуется так же, как в стеке.</p>
 
                     </main>
 
