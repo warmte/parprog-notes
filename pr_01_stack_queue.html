@@ -169,7 +169,7 @@
 <h2><a class="header" href="#mutual-exclusion" id="mutual-exclusion">Mutual exclusion</a></h2>
 <p>Aka <code>mutex</code> или <code>lock</code>, только один поток может держать блокировку.</p>
 <h3><a class="header" href="#atomic-counter" id="atomic-counter">Atomic counter</a></h3>
-<pre><code class="language-kotlin">val l = Lock()
+<pre><code class="language-java">val l = Lock()
 var counter = 0
 
 fun incAndGet(): Int {
@@ -185,7 +185,7 @@ fun incAndGet(): Int {
 <h2><a class="header" href="#lock-freedom" id="lock-freedom">Lock-freedom</a></h2>
 <p>Гарантирует прогресс в системе. <code>CAS (Compare-And-Set)</code> – <code>CAS(p, old, new)</code> атомарно проверяет, что значение по адресу <code>p</code> атомарно совпадает с <code>old</code> и заменяет его на <code>new</code>.</p>
 <h3><a class="header" href="#counter" id="counter">Counter</a></h3>
-<pre><code class="language-kotlin">fun getAndInc(): Int {
+<pre><code class="language-java">fun getAndInc(): Int {
     while (true) {
         cur := c
         if CAS(&amp;c, cur, cur + 1) {
@@ -195,7 +195,7 @@ fun incAndGet(): Int {
 }
 </code></pre>
 <h3><a class="header" href="#stack" id="stack">Stack</a></h3>
-<pre><code class="language-kotlin">fun pop(): Int {
+<pre><code class="language-java">fun pop(): Int {
     head := H
     while (true) {
         if CAS(&amp;H, head, head == null ? null : head.Next) {
@@ -225,7 +225,7 @@ fun top(): Int? {
 <h3><a class="header" href="#queue" id="queue">Queue</a></h3>
 <p>Операция добавления элемента должна переписать <code>Next</code> у <code>Tail</code> и подвинуть <code>Tail</code> на последний элемент. Если мы перепишем <code>Next</code>, но не успеем подвинуть <code>Tail</code> (какой-то другой поток тоже начал писать) всё сломается.
 <strong>Helping</strong>: пусть если поток хочет положить элемент в конец очереди, а у последнего элемента уже есть <code>Next</code>, он просто поможет подвинуть <code>Tail</code> на элемент вперёд и опять попытается добавить свой элемент уже в следующей итерации. Тогда при добавлении элемента и передвижении <code>Tail</code> его <code>CAS</code> для передвижения <code>Tail</code> не пройдёт – хвост уже перенесли.</p>
-<pre><code class="language-kotlin">fun enqueue (x: int) {
+<pre><code class="language-java">fun enqueue (x: int) {
     newTail := Node { Value = x, N = null}
     while (true) { // CAS loop
         tail := T
