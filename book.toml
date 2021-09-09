@@ -4,3 +4,7 @@ language = "en"
 multilingual = false
 src = "src"
 title = "Parallel Programming 2021 Notes"
+
+[output.html]
+mathjax-support = true
+
