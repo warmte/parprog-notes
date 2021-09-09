@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js ayu">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>About &amp; Links - Parprog course notes</title>
+        <title>About &amp; Links - Parallel Programming 2021 Notes</title>
         
         
 
@@ -44,7 +44,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -70,7 +70,7 @@
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
             html.classList.remove('no-js')
-            html.classList.remove('ayu')
+            html.classList.remove('light')
             html.classList.add(theme);
             html.classList.add('js');
         </script>
@@ -108,11 +108,11 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
                         
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
@@ -121,15 +121,11 @@
                         
                     </div>
 
-                    <h1 class="menu-title">Parprog course notes</h1>
+                    <h1 class="menu-title">Parallel Programming 2021 Notes</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
-                        </a>
-                        
-                        <a href="https://github.com/warmte/parprog-notes" title="Git repository" aria-label="Git repository">
-                            <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                         
                     </div>
@@ -159,32 +155,10 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#cpp-notes" id="cpp-notes">cpp-notes</a></h1>
-<p>Здесь собраны конспекты и ссылки на записи лекций курса по C++ студентам y2019 кафедры КТ в университете ИТМО.</p>
-<p>Лектор - <strong>Иван Сорокин</strong></p>
-<p><a href="https://lejabque.github.io/cpp-notes/">Сайт с конспектом.</a></p>
-<p>Конспекты содержат баги, поэтому <a href="https://github.com/lejabque/cpp-notes/blob/master/CONTRIBUTING.md">не стесняйтесь вносить правки.</a></p>
-<p>Помимо лекций, конспекты включают в себя дополнения из конспектов <a href="https://github.com/sorokin/cpp-notes">@sorokin</a> и <a href="https://github.com/hazzus/cpp-conspects">@hazzus</a></p>
-<h4><a class="header" href="#Дополнительные-лекции" id="Дополнительные-лекции">Дополнительные лекции</a></h4>
-<ul>
-<li><a href="https://www.youtube.com/watch?v=Cu6QYb_j_2Y">Лекция про инструменты разработки</a></li>
-<li><a href="https://www.youtube.com/watch?v=nGsD8guQ_dQ">Лекция про UB, strict aliasing и оптимизации компилятора</a></li>
-</ul>
-<h4><a class="header" href="#Полезные-ссылки" id="Полезные-ссылки">Полезные ссылки:</a></h4>
-<ul>
-<li><a href="https://cpp-kt.github.io/course/">Сайт курса</a></li>
-</ul>
-<h4><a class="header" href="#Презентации-и-ссылки-по-материалу" id="Презентации-и-ссылки-по-материалу">Презентации и ссылки по материалу:</a></h4>
-<ul>
-<li><a href="slides/lecture-1.pdf">Презентация про ассемблер</a></li>
-<li><a href="slides/lecture-2.pdf">Презентация про процессор и оптимизации</a></li>
-<li><a href="slides/intrusive.pdf">Презентация про интрузивный список</a></li>
-<li><a href="slides/shared_ptr.pdf">Презентация про shared_ptr</a></li>
-<li><a href="https://www.felixcloutier.com/x86/">Справочник по инструкциям x86</a>, <a href="https://www.nasm.us/doc/">nasm документация</a></li>
-<li><a href="https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/">Системные вызовы Linux</a></li>
-<li><a href="https://wiki.osdev.org/Paging">Про страничную адресацию</a></li>
-<li><a href="http://slides.com/romanmelnikov-1/deck-1/live">Презентация с ЭВМ про виртуальную память</a></li>
-</ul>
+                        <h1><a class="header" href="#parprog-notes" id="parprog-notes">parprog-notes</a></h1>
+<p>Здесь собраны конспекты и ссылки на записи лекций курса по Параллельному программированию студентам y2019 кафедры КТ в университете ИТМО.</p>
+<p>Лекторы - <strong>Роман Елизаров</strong> и <strong>Никита Коваль</strong></p>
+<p>Конспекты содержат баги, поэтому <a href="CONTRIBUTING.html">не стесняйтесь вносить правки.</a></p>
 
                     </main>
 
