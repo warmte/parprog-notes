@@ -3,8 +3,4 @@ authors = ["Ilona Bozhe"]
 language = "en"
 multilingual = false
 src = "src"
-title = "Parprog course notes"
-
-[output.html]
-default-theme = "ayu"
-git-repository-url = "https://github.com/warmte/parprog-notes"
+title = "Parallel Programming 2021 Notes"
