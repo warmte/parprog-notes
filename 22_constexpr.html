@@ -1,0 +1,404 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Статическая и динамическая инициализация, constexpr - Parprog course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.</strong> Ещё про классы, выделение памяти, препроцессор</a></li><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.</strong> Наследование, виртуальные функции</a></li><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="12_stl_sfinae.html"><strong aria-hidden="true">13.</strong> Обзор STL, tag-dispatching, SFINAE, пространства имён</a></li><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="16_smart_pointers.html"><strong aria-hidden="true">17.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.</strong> Perfect forwarding, variadic templates</a></li><li class="chapter-item expanded "><a href="18_decltype_auto_nullptr.html"><strong aria-hidden="true">19.</strong> Decltype, declval, auto, nullptr</a></li><li class="chapter-item expanded "><a href="19_lambdas_type_erasure.html"><strong aria-hidden="true">20.</strong> Анонимные функции, type erasure, std::function</a></li><li class="chapter-item expanded "><a href="20_signals_reetrancy_errors.html"><strong aria-hidden="true">21.</strong> Сигналы, reetrancy, обработки ошибок</a></li><li class="chapter-item expanded "><a href="21_optional_variant_tuple_stringview.html"><strong aria-hidden="true">22.</strong> Optional, variant, tuple, string_view</a></li><li class="chapter-item expanded "><a href="22_constexpr.html" class="active"><strong aria-hidden="true">23.</strong> Статическая и динамическая инициализация, constexpr</a></li><li class="chapter-item expanded "><a href="23_multithreading.html"><strong aria-hidden="true">24.</strong> Многопоточность</a></li><li class="chapter-item expanded "><a href="24_qt.html"><strong aria-hidden="true">25.</strong> Qt</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Parprog course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/warmte/parprog-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#Инициализация-constexpr" id="Инициализация-constexpr">Инициализация, constexpr</a></h1>
+<ul>
+<li><a href="https://youtu.be/Dp2AIvae27M?t=1377">Запись лекции №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=N7P81pzup6w">Запись лекции №2</a></li>
+</ul>
+<h2><a class="header" href="#Статическая-и-динамическая-инициализация" id="Статическая-и-динамическая-инициализация">Статическая и динамическая инициализация</a></h2>
+<pre><code class="language-c++">int a = 42;
+int f() {
+    int result;
+    std::cin &gt;&gt; result;
+    return result;
+}
+
+int a = 42; // инициализируется в момент компиляции
+int b = f(); // инициализируется
+</code></pre>
+<p>Переменные <code>a</code> и <code>b</code> устроены по разному: <code>a</code> инициализируется на этапе компиляции, а под <code>b</code> просто резевируются 4 байта, а её инициализация происходит в момент старта программы.  Говорят, что переменная <code>a</code> инициализируется <em>статически</em>, a <code>b</code> - динамически.</p>
+<p>Динамическая инициализация глобальных переменных происходит в момент запуска программы до входа в функцию <code>main</code>, соответственно, разрушаются они после выхода из <code>main</code>.</p>
+<p>Есть несколько причин, почему динамическая инициализация может быть нежелательна:</p>
+<ul>
+<li>Тратит время при запуске программы</li>
+<li>Гарантируется, что в одной единице трансляции переменные инициализируются сверху вниз, а между разными порядок не гарантирован. Это может стать проблемой, если инициализация переменной в одной трансляции обращается к переменной в другой, а та ещё не инициализирована.</li>
+<li>Исключение в динамической инициализации завершает программу, так как до входа в <code>main</code>  его негде поймать.</li>
+</ul>
+<h2><a class="header" href="#constexpr-функции-и-переменные" id="constexpr-функции-и-переменные">constexpr функции и переменные</a></h2>
+<p>Понятно, что использовать статическую инициализацию приятнее, чем динамическую, но в C++ все функции по дефолту исполняются в рантайме, но иногда мы хотим получить значение на этапе компиляции. Например, это может быть функция <code>max</code> для выбора максимального размера классов из шаблонных параметров. В принципе, это можно сделать так:</p>
+<pre><code class="language-c++">template &lt;size_t a, size_t b&gt;
+struct max {
+    static size_t const value = a &lt; b ? b : a;
+};
+
+template &lt;typename A, typename B&gt;
+struct variant {
+    char stg[max&lt;sizeof(A), sizeof(B)&gt;::value];
+};
+</code></pre>
+<p>Минус такого подхода, кроме неприятного синтаксиса, в том, что функцию <code>max</code> для рантайм-вычислений и структуру <code>max</code> приходится писать дважды.</p>
+<p>В C++11 разрешили делать функции, которые могут исполняться во время компиляции. Если функция со спецификатором <code>constexpr</code> принимает аргументы, значения которых - компайл-тайм константы, то её значение будет вычислено в момент компиляции, иначе в рантайме.</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+constexpr T const&amp; max(T const&amp; a, T const&amp; b) {
+    return a &lt; b ? b : a;
+}
+</code></pre>
+<p>В C++11 были жёсткие ограничения для таких функций - их тело должно было состоять только из одного <code>return</code>. В C++14, 17 <del>и 20</del> эти ограничения были сильно ослаблены. </p>
+<p>Если функция <code>constexpr</code>, то она должна внутри вызывать только <code>constexpr</code> функции.</p>
+<p>С появлением <code>constexpr</code> функций обнаружилась нужда, например, в <code>constexpr</code> переменных. Отличие в том, что функция со спецификатором <code>constexpr</code> МОЖЕТ быть посчитана в компайл-тайме, а такая переменная ОБЯЗАНА быть компайл-тайм константой.</p>
+<pre><code class="language-c++">constexpr int f() {
+    // ...
+}
+int const a = 42; // статическая инициализация
+int const b = f(); // динамическая инициализация
+constexpr int c = f(); // статическая инициализация
+</code></pre>
+<p>Переменная с модификатором <code>const</code> считается компайл-тайм константой, если она инициализируется статически. Кроме того,<code>const</code> для глобальных неявно означает, что они <code>static</code> (внутренняя линковка). Предположительно, так было сделано, потому что они подразумевались как замена дефайнов, которые обычно пишутся в хедерах.</p>
+<p>Конструкторы и деструкторы так же, как и обычные функции, могут быть constexpr. Например, это позволяет инициализировать объект пользовательского типа статически (например, использовать его в constexpr-контексте).</p>
+<p>Начиная с C++20, в constexpr-функциях можно аллоцировать и освобождать память с помощью <code>new</code>. К сожалению, <code>placement new</code>, так же стал constexpr-выражением только в C++20. Как в C++17 сделать <code>variant</code> с constexpr-конструктором? Можно вместо <code>std::aligned_storage</code> применить <code>union</code>:</p>
+<pre><code class="language-c++">template &lt;typename A, typename B&gt;
+union storage_t {
+    constexpr storage_t(A a)
+        : a(std::move(a)) {}
+    A a;
+    B b;
+};
+
+template &lt;typename A, typename B&gt;
+struct variant {
+    constexpr variant (A a)
+        : index(0),
+          storage_t&lt;A, B&gt;(std::move(a)) {}
+    A* get_first() {
+        return stg.a;
+    }
+  private:
+    size_t index;
+    storage_t&lt;A, B&gt; stg;
+};
+</code></pre>
+<p><code>constexpr</code> может быть полезен, чтобы гарантировать, что static-переменные внутри функции инициализируются статически. Обычная static-переменная инициализируется в тот момент, когда исполнение программы первый раз доходит до её объявления (например, при вызове функции, если переменная не внутри каких-то ветвлений). В таком случае каждый следующий раз происходила бы проверка, инициализирована ли эта переменная. Если же эта переменная объявлена как <code>constexpr</code>, то никакие проверки не нужны, так как она инициализируется статически.</p>
+<pre><code class="language-c++">type_descriptor const* empty_type_descriptor {
+    static constexpr type_descriptor instance = {
+        //...
+    };
+}
+</code></pre>
+<h2><a class="header" href="#if-constexpr" id="if-constexpr">if constexpr</a></h2>
+<p>Расмотрим реализацию <a href="https://github.com/sorokin/function">function</a>, которую мы делали на практике.</p>
+<p>В его имплементации использовался класс <code>type_descriptor</code> со SFINAE. Нам повезло, что критерий для объекта был только один (<code>fits_small_storage</code>), но если бы их было несколько, то это выглядело бы сильно хуже. Но даже в нашем случае это выглядит громоздко, например, мы  заводим функцию <code>initialize_storage</code>, которая используется только один раз.</p>
+<p>Мы могли бы сделать это через <code>if</code>, но так получится не всегда:</p>
+<pre><code class="language-c++">struct mytype1 {
+    static constexpr bool has_foo = true;
+    void foo();
+};
+
+struct mytype2 {
+    static constexpr bool has_foo = false;
+    void bar();
+};
+
+template &lt;typename T&gt;
+void f(T obj) {
+    if (T::has_foo) {
+        obj.foo();
+    } else {
+        obj.bar();
+    }
+}
+</code></pre>
+<p>Проблема в том, что при компиляции <code>if</code> оставляет обе ветки, но одна из них не скомпилируется, если у объекта нет какой-то из функций.</p>
+<p>В языке для этого появилась конструкция <code>if constexpr</code>. Тогда код будет выглядеть следующим образом:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+void f(T obj) {
+    if constexpr (T::has_foo) {
+        obj.foo();
+    } else {
+        obj.bar();
+    }
+}
+</code></pre>
+<p><code>if constexpr</code> работает следующим образом: он требует, чтобы условие было <code>constexpr</code> выражением, и делает бранчинг на этапе компиляции, не подставляя ту ветку, которая не подходит условию.</p>
+<h2><a class="header" href="#Дедупликация-функций" id="Дедупликация-функций">Дедупликация функций</a></h2>
+<pre><code class="language-c++">template &lt;typename X&gt;
+struct A {
+    template &lt;typename Y&gt;
+    struct B {
+        template &lt;typename Z&gt;
+        void foo();
+    }
+}
+</code></pre>
+<p>Функция <code>foo</code> инстанцируется для каждого набора параметров <code>X, Y, Z</code>, даже если какой-нибудь из них не используется. Может ли компилятор посмотреть, что она не зависит, например, от <code>X</code> и &quot;склеить&quot; их?</p>
+<p>Проблема в том, что у функции есть адрес и кажется логичным, что у разных функций должны быть разные адреса.</p>
+<pre><code class="language-c++">assert(&amp;foo&lt;int&gt; != &amp;foo&lt;float&gt;);
+</code></pre>
+<p>В стандарте (<code>7.6.10</code>) есть следующие слова:  <em>Otherwise, if the pointers are both null, both point to the same function, or both <a href="https://eel.is/c++draft/basic.compound#def:represents_the_address">represent the same address</a>, they compare equal<a href="https://eel.is/c++draft/expr.eq#3.2.sentence-1">.</a></em> Некоторые люди считают, что слова про <em>same address</em> могут относиться и к функциям тоже. В таком случае &quot;склеивание&quot; инстанциаций шаблонной функции валидно.</p>
+<p>Некоторые линковщики умеют дедуплицировать функции, например, у <code>MSVC</code> функции склеиваются в одну. Линковщик <em>gold</em>, например, работает с этим аккуратнее - к примеру, не склеивает конструктор и деструктор, а так же может не склеивать функции, у которых берутся адреса.</p>
+<p>Есть возможность уменьшить размер кода после инстанцирования шаблонов без нарушения инварианта на равенство адресов - можно оставить тело одной функции, а из остальных сделать на неё <code>jmp</code>. </p>
+<p>В GCC есть оптимизация <code>-fipa-icf</code>, которая &quot;склеивает&quot; функции - она работает эффективнее, если включена линк-тайм оптимизация, потому что на этапе линковки больше информации про функции из других единиц трансляции. Кроме того, на этапе компиляции оптимизируется код в каком-то внутреннем представлении компилятора, но машинный код для разных представлений может быть одинаковым, что становится понятно на этапе линковки.</p>
+<p>Забавный факт - профилирование и отладка программы усложняются при &quot;склеивании&quot; функций (вызываем <code>foo</code>, а исполнение прыгает в функции <code>bar</code>).  В <em>gold</em> это обошли, анализируя цепочку вызовов и выводя из неё, какая функция была вызвана.</p>
+<h2><a class="header" href="#if-constexpr-и-дедупликация" id="if-constexpr-и-дедупликация">if constexpr и дедупликация</a></h2>
+<p>Возвращаясь к реализации <code>function</code>: там для каждого типа у <code>empty_type_descriptor</code> создавалась пустая лямбда-функция деструктора. В реализации <code>function</code> у этих лямбд берётся адрес, хоть нам и не важно, чтобы они не совпадали, но компилятор их не склеивает. Как это пофиксить?</p>
+<p>Заметим, что вообще в реализации <code>storage</code> был шаблонным, но шаблонный параметр использовался только в типе указателя, который он хранит, поэтому можно убрать шаблон и хранить просто <code>void*</code>. Тогда можно вынести функцию из пустого дескриптора наружу:</p>
+<pre><code class="language-c++">void destroy_trivial(storage*) {}
+</code></pre>
+<p>А в дескрипторе взять адрес этой функции, который будет одинаковый для всех пустых дескрипторов. </p>
+<p>Аналогично можно оптимизировать не только для пустого дескриптора - для всех тривиальных копирований, перемещений и уничтожений, можно объединить функции. Например:</p>
+<pre><code class="language-c++">template &lt;typename T, typename R, typename... Args&gt;
+constexpr type_descriptor&lt;R, Args...&gt; compute_type_descriptor() {
+    // if constexpr на свойства типа и т.д.
+}
+
+template &lt;template typename T, typename R, typename... Args&gt; 
+inline constexpr type_descriptor&lt;R, Args...&gt; type_descr_instance = compute_type_descriptor&lt;T, R, Args...&gt;(); 
+</code></pre>
+<p><em>inline нужен для того, чтобы во всех единицах трансляции эта глобальная переменная была общей, потому что по умолчанию у глобальных константных переменных внутренняя линковка</em></p>
+<p>Тогда внутри <code>compute_type_descriptor</code> может быть следующая конструкция:</p>
+<pre><code class="language-c++">template &lt;typename T, typename R, typename... Args&gt;
+constexpr type_descriptor&lt;R, Args...&gt; compute_type_descriptor() {
+    if constexpr (fits_small_storage&lt;T&gt;) {
+        type_descriptor&lt;R, Args...&gt; result;
+        if constexpr (std::is_trivially_destructible_v&lt;T&gt;) {
+            result.destroy = &amp;destroy_trivial;
+        } else {
+            result.destroy = [](storage* src) noexcept {
+                src-&gt;template get_static&lt;T&gt;().~T();
+            };
+        }
+        // copy, move, etc
+    } else {
+        // ...
+    }
+}
+</code></pre>
+<p>Такой код некорректен с точки зрения C++17, но корректен для C++20, потому что в 20-м стандарте разрешили оставлять неинициализированными переменные в constexpr выражениях (в данном случае мемберы <code>result</code>). Для C++17 можно сделать костыль и сначала проинициализировать всё нулями, а потом уже нужными значениями.</p>
+<p>К чему вообще этот пример? Чтобы продемонстрировать, насколько <code>if constexpr</code> помогает упростить и сделать читабельной логику того, как работает функция в зависимости от каких-то компайл-тайм констант (в данном случае - свойств типов) - сделать такое через SFINAE было бы труднее.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="21_optional_variant_tuple_stringview.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="23_multithreading.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="21_optional_variant_tuple_stringview.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="23_multithreading.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
